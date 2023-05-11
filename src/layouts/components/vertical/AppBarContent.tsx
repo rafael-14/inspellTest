@@ -39,20 +39,22 @@ const AppBarContent = (props: Props) => {
   return (
     <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
       <Box className='actions-left' sx={{ mr: 2, display: 'flex', alignItems: 'center' }}>
-        <Typography variant={'h5'}>iGateway Dashboard</Typography>
+        <img src='../../../images/pages/GatewayDashboard.png' />
       </Box>
       <Box className='actions-right' sx={{ display: 'flex', alignItems: 'center' }}>
-        {!hiddenMd && <Tooltip title='CNPJ/CPF da conta' arrow>
-          <Box marginRight='20px' sx={{ display: 'flex', alignItems: 'center' }}>
-            <>
-              {cnpjCpf && (
-                <Typography sx={{ fontWeight: 600, fontSize: '1.2rem !important' }}>
-                  {cnpjCpf.length > 12 ? 'CNPJ: ' + cnpj(cnpjCpf) : 'CPF: ' + cpf(cnpjCpf)}
-                </Typography>
-              )}
-            </>
-          </Box>
-        </Tooltip>}
+        {!hiddenMd && (
+          <Tooltip title='CNPJ/CPF da conta' arrow>
+            <Box marginRight='20px' sx={{ display: 'flex', alignItems: 'center' }}>
+              <>
+                {cnpjCpf && (
+                  <Typography sx={{ fontWeight: 600, fontSize: '1.2rem !important' }}>
+                    {cnpjCpf.length > 12 ? 'CNPJ: ' + cnpj(cnpjCpf) : 'CPF: ' + cpf(cnpjCpf)}
+                  </Typography>
+                )}
+              </>
+            </Box>
+          </Tooltip>
+        )}
         <Box marginRight='20px' sx={{ display: 'flex', alignItems: 'center' }}>
           <PlacesDropdown placeId={placeId} places={places} setPlace={setPlace} />
         </Box>
@@ -63,7 +65,7 @@ const AppBarContent = (props: Props) => {
         </Tooltip>
         <Tooltip title={logsOn ? 'DashBoard' : 'Logs'} arrow>
           <IconButton
-            color='inherit'
+            color='primary'
             aria-haspopup='true'
             onClick={() => {
               changeView()

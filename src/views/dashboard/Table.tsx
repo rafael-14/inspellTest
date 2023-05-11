@@ -12,16 +12,17 @@ import TableContainer from '@mui/material/TableContainer'
 
 // ** Types Imports
 import { ThemeColor } from 'src/@core/layouts/types'
+import { useTheme } from '@mui/material/styles'
 import CardHeader from '@mui/material/CardHeader'
 
 interface RowType {
-  CODTERMINAL: number,
-  DESCRICAO: string,
-  MARCATERMINAL: string,
-  MODELOTERMINAL: string,
-  ENDERECOIP: string,
-  QTDPEDESTRES: number,
-  STATUS: string,
+  CODTERMINAL: number
+  DESCRICAO: string
+  MARCATERMINAL: string
+  MODELOTERMINAL: string
+  ENDERECOIP: string
+  QTDPEDESTRES: number
+  STATUS: string
 }
 
 interface StatusObj {
@@ -31,31 +32,37 @@ interface StatusObj {
 }
 
 const statusObj: StatusObj = {
-  ONLINE : { color: 'success' },
-  ERRO : { color: 'error' },
-  ERRO_NS : { color: 'error' },
-  ERRO_SENHA : { color: 'warning' },
-  DESCONHECIDO : { color: 'primary' },
-  Livre: { color: 'info' },
+  ONLINE: { color: 'success' },
+  ERRO: { color: 'error' },
+  ERRO_NS: { color: 'error' },
+  ERRO_SENHA: { color: 'warning' },
+  DESCONHECIDO: { color: 'primary' },
+  Livre: { color: 'info' }
 }
 
-const DashboardTable = (props:any) => {
+const DashboardTable = (props: any) => {
   const { terminals } = props
 
   const rows = terminals
+
+  const theme = useTheme()
 
   return (
     <Card>
       <CardHeader
         title='Coletores'
-        sx={{pb:'0px'}}
+        sx={{ pb: '6px', pt: '5px', bgcolor: theme.palette.primary.main }}
         titleTypographyProps={{
-          sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
+          sx: {
+            lineHeight: '2rem !important',
+            letterSpacing: '0.15px !important',
+            color: theme.palette.primary.contrastText
+          }
         }}
       />
       <TableContainer>
         <Table sx={{ minWidth: 800 }} aria-label='table in dashboard'>
-          <TableHead>
+          <TableHead sx={{ mt: '24px' }}>
             <TableRow>
               <TableCell align='center'>Codigo</TableCell>
               <TableCell>Descrição</TableCell>
@@ -67,14 +74,17 @@ const DashboardTable = (props:any) => {
           </TableHead>
           <TableBody>
             {rows.map((row: RowType) => {
-              if (!['ONLINE','ERRO','ERRO_SENHA','ERRO_NS'].includes(row.STATUS)) row.STATUS='DESCONHECIDO';
+              if (!['ONLINE', 'ERRO', 'ERRO_SENHA', 'ERRO_NS'].includes(row.STATUS)) row.STATUS = 'DESCONHECIDO'
+
               return (
                 <TableRow hover key={row.CODTERMINAL} sx={{ '&:last-of-type td, &:last-of-type th': { border: 0 } }}>
                   <TableCell align='center'>{row.CODTERMINAL}</TableCell>
                   <TableCell>{row.DESCRICAO}</TableCell>
                   <TableCell sx={{ py: theme => `${theme.spacing(0.5)} !important` }}>
                     <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                      <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>{row.MODELOTERMINAL}</Typography>
+                      <Typography sx={{ fontWeight: 500, fontSize: '0.875rem !important' }}>
+                        {row.MODELOTERMINAL}
+                      </Typography>
                       <Typography variant='caption'>{row.MARCATERMINAL}</Typography>
                     </Box>
                   </TableCell>
@@ -82,7 +92,7 @@ const DashboardTable = (props:any) => {
                   <TableCell align='center'>{row.QTDPEDESTRES}</TableCell>
                   <TableCell align='center'>
                     <Chip
-                      label={row.STATUS=='DESCONHECIDO' ? '?' : row.STATUS}
+                      label={row.STATUS == 'DESCONHECIDO' ? '?' : row.STATUS}
                       color={statusObj[row.STATUS].color}
                       sx={{
                         height: 24,
@@ -93,7 +103,8 @@ const DashboardTable = (props:any) => {
                     />
                   </TableCell>
                 </TableRow>
-            )})}
+              )
+            })}
           </TableBody>
         </Table>
       </TableContainer>

@@ -20,9 +20,9 @@ import { ApexOptions } from 'apexcharts'
 import ReactApexChart from 'src/@core/components/react-apexcharts'
 import useMediaQuery from '@mui/material/useMediaQuery'
 
-const WeeklyOverview = (props:any) => {
-
+const WeeklyOverview = (props: any) => {
   const { marksLastDays, terminals } = props
+
   // ** Hook
   const theme = useTheme()
 
@@ -41,7 +41,7 @@ const WeeklyOverview = (props:any) => {
 
   const chartData: any = []
   const data = [0, 0, 0, 0, 0, 0, 0]
-  for (let terminal of terminals) {
+  for (const terminal of terminals) {
     chartData.push({
       name: terminal.DESCRICAO,
       type: 'column',
@@ -134,7 +134,7 @@ const WeeklyOverview = (props:any) => {
 
     // Stroke
     stroke: {
-      width: 3,
+      width: 1,
       curve: 'smooth',
       lineCap: 'round'
     },
@@ -158,7 +158,7 @@ const WeeklyOverview = (props:any) => {
 
     // Legend
     legend: {
-      show: true,
+      show: false,
       fontSize: String(13),
       position: useMediaQuery((theme: Theme) => theme.breakpoints.down('lg')) ? 'top' : 'right',
       horizontalAlign: 'right',
@@ -195,9 +195,9 @@ const WeeklyOverview = (props:any) => {
     <Card>
       <CardHeader
         title='Marcações nos últimos 7 dias'
-        sx = {{pb: '0px'}}
+        sx={{ pb: '6px', pt: '5px', bgcolor: theme.palette.primary.main }}
         titleTypographyProps={{
-          sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important' }
+          sx: { lineHeight: '2rem !important', letterSpacing: '0.15px !important', color: theme.palette.primary.contrastText }
         }}
       />
       <CardContent sx={{ '& .apexcharts-xcrosshairs.apexcharts-active': { opacity: 0 } }}>

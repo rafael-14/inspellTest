@@ -69,9 +69,9 @@ const MenuItemSubtitle = styled(Typography)<TypographyProps>({
   textOverflow: 'ellipsis'
 })
 
-const PlacesDropdown = (props:any) => {
-
+const PlacesDropdown = (props: any) => {
   const { places, placeId, setPlace } = props
+
   // ** States
   const [anchorEl, setAnchorEl] = useState<(EventTarget & Element) | null>(null)
 
@@ -97,32 +97,31 @@ const PlacesDropdown = (props:any) => {
     }
   }
 
-  function getPlace(){
-    if (places.length==0) {
+  function getPlace() {
+    if (places.length == 0) {
       return '---'
     } else {
-      if (placeId=='ALL') return 'Todos'
-      const place = (places as any).find((place:any)=>place.ID==placeId)
+      if (placeId == 'ALL') return 'Todos'
+      const place = (places as any).find((place: any) => place.ID == placeId)
+
       return place ? place.DESCRICAO : 'Todos'
     }
   }
 
   return (
     <Fragment>
-      <Tooltip  title={places.length==0 ? 'Nenhum local cadastrado' : 'Local do iGateway'} arrow>
+      <Tooltip title={places.length == 0 ? 'Nenhum local cadastrado' : 'Local do iGateway'} arrow>
         <span>
-        <IconButton
-          color='primary'
-          aria-haspopup='true'
-          onClick={handleDropdownOpen}
-          aria-controls='customized-menu'
-          disabled={places.length==0}
-        >
-          <MapMarkerOutline />
-          <Typography sx={{ fontWeight: 600, fontSize: '1.2rem !important' }}>
-                {getPlace()}
-          </Typography>
-        </IconButton>
+          <IconButton
+            color='inherit'
+            aria-haspopup='true'
+            onClick={handleDropdownOpen}
+            aria-controls='customized-menu'
+            disabled={places.length != 0}
+          >
+            <MapMarkerOutline color='inherit' />
+            <Typography sx={{ fontWeight: 600, fontSize: '1.2rem !important' }}>{getPlace()}</Typography>
+          </IconButton>
         </span>
       </Tooltip>
       <Menu
@@ -141,18 +140,19 @@ const PlacesDropdown = (props:any) => {
               </Box>
             </Box>
           </MenuItem>
-          { places && places.map((place:any)=>{
-            return (
-              <MenuItem onClick={handleDropdownClose} key={place.ID} id={place.ID}>
-              <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
-                  <MenuItemTitle>Código: {place.ID}</MenuItemTitle>
-                  <MenuItemSubtitle variant='body2'>{place.DESCRICAO}</MenuItemSubtitle>
-                </Box>
-              </Box>
-              </MenuItem>
-            )
-          })}
+          {places &&
+            places.map((place: any) => {
+              return (
+                <MenuItem onClick={handleDropdownClose} key={place.ID} id={place.ID}>
+                  <Box sx={{ width: '100%', display: 'flex', alignItems: 'center' }}>
+                    <Box sx={{ mx: 4, flex: '1 1', display: 'flex', overflow: 'hidden', flexDirection: 'column' }}>
+                      <MenuItemTitle>Código: {place.ID}</MenuItemTitle>
+                      <MenuItemSubtitle variant='body2'>{place.DESCRICAO}</MenuItemSubtitle>
+                    </Box>
+                  </Box>
+                </MenuItem>
+              )
+            })}
         </ScrollWrapper>
       </Menu>
     </Fragment>
